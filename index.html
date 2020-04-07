@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name='viewpoint' content="width=device-width ,">
+    <title>Product App</title>
+    <link rel="stylesheet" type="text/css" href="product_style.css">
+</head>
+<body>
+
+    <div class="nav-bar"></div>
+
+    <div id="app">
+        <div class="product"> 
+
+            <div class="product-image">
+                <img :src="image">
+            </div>
+
+            <div class="product-info">
+                <h1>{{product}}</h1>
+                <p v-show="onSale">On Sale!</p>
+                <p v-if="inStock">In Stock</p>
+                <p v-else-if
+                    :class="{strikethrough: inStock}"
+                    >Out of Stock</p>
+                     
+                <ul>
+                    <li v-for="detail in details">{{detail}}</li>
+                </ul>
+            <div v-for="variant in variants" 
+                 :key="variant.variantId"
+                 class="color-box"
+                 :style="{ backgroundColor: variant.variantColor }" 
+                 @mouseover="updateProduct(variant.variantImage)"
+                 >
+            </div>
+
+            <button v-on:Click="addToCart" 
+                    :disabled="!inStock"
+                    :class="{disabledButton: !inStock}"
+                    >
+                    Add to Cart</button>
+
+            <div class="cart">
+                <p>Cart({{cart}})</p>
+            </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.11"></script>
+    <script src="main.js"></script>
+</body>
+</html>
