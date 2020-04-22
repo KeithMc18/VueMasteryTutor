@@ -29,19 +29,18 @@ Vue.component('product', {
          >
     </div>
 
-    <button v-on:Click="addToCart" 
+    <button v-on:click="addToCart" 
             :disabled="!inStock"
             :class="{disabledButton: !inStock}"
             >
             Add to Cart</button>
 
-    <button v-on:Click="removeFromCart" 
+    <button v-on:click="removeFromCart" 
             :disabled="!inStock"
             :class="{disabledButton: !inStock}"
             >
             Remove</button>            
     </div>
-
 </div>`, 
 data(){
     return  {
@@ -69,13 +68,10 @@ data(){
 },
 methods:{
     addToCart() {
-        this.$emit('add-to-cart')
+        this.$emit('add-to-cart', this.variants[this.selectedvariant].variantId)
     },
-    removeFromCart(){
-        if(this.cart >=1){
-            this.cart -=1
-        }
-        else this.disabledButton;
+    removeFromCart(){   
+        this.cart -=1
     },
     updateProduct(index) {
         this.selectedvariant = index;
@@ -100,15 +96,25 @@ computed: {
 }
 })
 
+Vue.component("product-review", {
+    template:
+    `<input>`, 
+    data(){
+        return{
+            name:null
+        }
+    }
+})
+
 var app = new Vue({
     el: '#app',
     data: {
         premium: true,
-        cart: 0
+        cart: []
     }, 
     methods:{
-        updateCart(){
-            this.cart +=1
+        updateCart(id){
+            this.cart.push(id);  
         }
     }    
 });
